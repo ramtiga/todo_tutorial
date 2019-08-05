@@ -8,6 +8,14 @@ class HomeController extends Controller
 {
   public function index()
   {
-    return view('home');
+    $folder = Auth::user()->folders()->first();
+
+    if (is_null($folder)){
+      return view('home');
+    }
+
+    return redirect()->route('tasks.index', [
+      'id' => $folder->id,
+    ]);
   }
 }
